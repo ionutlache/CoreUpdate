@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %} Details - {{ product }} {% endblock %}
+
+{% block content %}
+
+
+    <br>    <br>    <br>
+    <div class="container">
+    <br/>
+    <div class="card mb-3" >
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+          <div style="text-align: center;">
+            <h5 class="card-title">Detalii {{ product }}</h5>
+            <p class="card-text">Pret: {{ product.price}} RON</p>
+            <p class="card-text">Categorie: {{ product.category}}</p>
+            <p class="card-text">Brand: {{ product.brand}}</p>
+            {% if product.cpu_socket != None %}  
+                <p class="card-text">CPU Socket: {{ product.cpu_socket}}</p>
+            {% endif %}  
+            {% if product.power_tdp != None %}  
+                <p class="card-text">Power TDP: {{ product.power_tdp}} W</p>
+            {% endif %}  
+            {% if product.gpu_type != None %}  
+                <p class="card-text">GPU Type: {{ product.gpu_type}}</p>
+            {% endif %}  
+            {% if product.ram_type != None %}  
+                <p class="card-text">RAM Type: {{ product.ram_type}}</p>
+            {% endif %}
+                <br/><br/>
+            <div class="row justify-content-center">
+                <div class="col-md-2">Quantity:</div>
+                    <div class="col-md-2">
+                        <label>
+                            <select class="form-select form-select-sm" id="qty-cart">
+                                <option value="1">1</option>
+                                <option value="1">2</option>
+                                <option value="1">3</option>
+                                <option value="1">4</option>
+                                <option value="1">5</option>
+                            </select>
+                        </label>
+                    </div>
+            </div>
+                <br/><br/>
+            <button type="button" value="{{ product.id }}" class="btn btn-success" id="add-cart">
+                Add to cart
+            </button>
+            <a href="{% url 'list-of-products' %}" class="btn btn-primary align-center">Back to list of products</a>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <br/><br/><br/>
+
+
+<script>
+
+$(document).on('click', '#add-cart', function(e){
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_add' %}',
+        data: {
+            product_id: $('#add-cart').val(),
+            product_qty: $('#qty-cart option:selected').text(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+
+        success: function(json){
+            document.getElementById('cart_quantity').textContent=json.qty
+            location.reload()
+        },
+
+        error: function(xhr, errmsg, err){
+        
+        }   
+    });
+
+
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+.navbar-custom {
+    background-color: rgba(176, 184, 184, 0.8);
+    font-size: 20px;
+}
+.head-home{
+    text-align: center;
+}
+
+.footer-custom{
+    background-color: rgba(176, 184, 184, 0.8);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.checkout-custom{
+    background-color: rgba(176, 184, 184, 0.8);
+
+}

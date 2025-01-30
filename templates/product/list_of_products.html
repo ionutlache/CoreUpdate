@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} List of products {% endblock %}
+
+{% block content %}
+
+
+    <div class="container-fluid">
+        <div class="row" style="padding-top: 10px;padding-bottom: 10px">
+                <div class="col-md-2 align-left">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-center">Filters</h3>
+                        </div>
+                        <form method="GET">
+                            <div class="card-body">
+                                {{ filters_form }}
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-outline-success">Filter</button>
+                                <a href='{% url 'list-of-products' %}' class="btn btn-outline-danger">Reset</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {% for product in all_products %}
+                
+                <div class="col-md-2">
+                    <div class="card">
+                        <a href="{% url 'product-details' product.id %}">
+                            <img class="card-img-top" src="{{ product.image.url }}" alt="..."/>
+                        </a>
+                        <div class="card-body p-4">
+                            <div class="text-left">
+                                <h5 class="card-title text-left">{{ product.name }}</h5>
+                                <p class="card-text">Price: {{ product.price }} RON</p>
+                                <p class="card-text">Category: {{ product.category }}</p>
+                                <p class="card-text">Brand: {{ product.brand }}</p>
+                                {% if product.cpu_socket != None %}
+                                    <p class="card-text">CPU Socket: {{ product.cpu_socket }}</p>
+                                {% endif %}
+                                {% if product.power_tdp != None %}
+                                    <p class="card-text">Power TDP: {{ product.power_tdp }} W</p>
+                                {% endif %}
+                                {% if product.ram_type != None %}
+                                    <p class="card-text">RAM Type: {{ product.ram_type }}</p>
+                                {% endif %}
+                                {% if product.gpu_type != None %}
+                                    <p class="card-text">GPU Type: {{ product.gpu_type }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="col md-2 text-center">
+                            <a href="{% url 'product-details' product.id %}" class="btn btn-success">View details</a>
+                        </div>    
+                        <br>
+                            {% if perms.product.add_product or perms.product.change_product or perms.product.delete_product%}
+                            <div class="dropdown text-center">
+                                <button class="btn btn-secondary dropdown-toggle " type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    more actions
+                                </button>
+                                
+                                    <ul class="dropdown-menu">
+                                        {% if perms.product.change_product %}
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'update-products' product.id %}">Update</a></li>
+                                        {% endif %}
+                                        {% if perms.product.delete_product %}
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'delete-products' product.id %}">Delete</a></li>
+                                        {% endif %}
+                                        {% if perms.product.add_product %}
+                                            <li><a class="dropdown-item" href="{% url 'create-products' %}">Create</a></li>
+                                        {% endif %}
+                                    </ul>
+                            </div>
+                            
+                            {% endif %}
+                        <br>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

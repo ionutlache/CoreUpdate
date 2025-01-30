@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} List of categories {% endblock %}
+
+{% block content %}
+
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                {% for category in categories %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="{% url 'product-per-category' category.id %}">
+                                <img class="card-img-top" src="{{ category.image.url }}" alt="..."/>
+                            </a>
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{ category.name }}</h5>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+{#                            <div class="dropdown text-center">#}
+{#                                <button class="btn btn-secondary dropdown-toggle " type="button"#}
+{#                                        data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                                    more actions#}
+{#                                </button>#}
+{#                                <ul class="dropdown-menu">#}
+{#                                    <li><a class="dropdown-item"#}
+{#                                           href="{% url 'update-categories' category.id %}">Update</a></li>#}
+{#                                    <li><a class="dropdown-item"#}
+{#                                           href="{% url 'delete-categories' category.id %}">Delete</a></li>#}
+{#                                    <li><a class="dropdown-item" href="{% url 'create-categories' %}">Create</a></li>#}
+{#                                </ul>#}
+{#                            </div>#}
+                            {% if perms.category.add_category or perms.category.change_category or perms.category.delete_category %}
+                                <div class="dropdown text-center">
+                                    <button class="btn btn-secondary dropdown-toggle " type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        more actions
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                        {% if perms.category.change_category %}
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'update-categories' category.id %}">Update</a></li>
+                                        {% endif %}
+                                        {% if perms.category.delete_category %}
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'delete-categories' category.id %}">Delete</a></li>
+                                        {% endif %}
+                                        {% if perms.category.add_category %}
+                                            <li><a class="dropdown-item" href="{% url 'create-categories' %}">Create</a></li>
+                                            
+                                        {% endif %}
+                                    </ul>
+                                </div>
+
+                            {% endif %}
+                            <br>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+
+
+{% endblock %}
+

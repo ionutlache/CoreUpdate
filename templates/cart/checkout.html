@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        Order Summary
+                    </div>
+                    <div class="card-body">
+                        {% for product in cart_products %}
+                            {{ product.name }}:
+                            
+                            RON {{ product.price }}
+                            <br/>
+                            <small>Quantity:
+                                {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                        {{ value }}
+                                    {% endif %}
+                                {% endfor %}</small>
+                            <br/><br/>
+
+                        {% endfor %}
+                        Total: RON {{ totals }}
+                        <br/><br/>
+                        <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary">Update Items</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Order info</h3>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {{ form }}
+                        </div>
+                    </form>  
+                </div>    
+                <br/><br/>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %} CoreUpdate - One step ahead {% endblock %}
+
+{% block content %}
+    <br>
+        <h4 style="text-align: center"><mark style="background-color: rgba(176, 184, 184, 0.8)">News</mark></h4>
+        <section class="py-2">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="https://cdn.mos.cms.futurecdn.net/6pYsX33BBjwLA8LnxVBf3a-840-80.jpg.webp"
+                                alt="Card image cap">
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="card-title">Arm vs. Qualcomm</h5>
+                                    <p class="card-text">Arm demands that the patent-infringing Nuvia designs be destroyed</p>
+                                    <br><br><br><br>
+                                    <div class="col md-2 text-center">
+                                        <a href="https://www.tomshardware.com/pc-components/cpus/arm-vs-qualcomm-trial-begins-arm-demands-that-the-patent-infringing-nuvia-designs-be-destroyed" class="btn btn-success">View details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="https://cdn.mos.cms.futurecdn.net/N435TKXwPMnd3GuxfhvTPZ-840-80.jpg.webp"
+                                alt="Card image cap">
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="card-title">RAM Benchmark Hierarchy: DDR5, DDR4 for AMD, Intel CPUs</h5>
+                                    <p class="card-text">Our RAM benchmark hierarchy ranks DDR5 and DDR4 memory kits of all frequencies and capacities for any budget.</p>
+                                    <br>
+                                    <div class="col md-2 text-center bottom-0">
+                                            <a href="https://www.tomshardware.com/news/ram-benchmark-hierarchy" class="btn btn-success">View details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="https://cdn.mos.cms.futurecdn.net/3EfK9SznjYGN9YyMMfTQzS-840-80.png.webp"
+                                alt="Card image cap">
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="card-title">A new PCB design can boost heat dissipation by 55x</h5>
+                                    <p class="card-text">OKI Circuit Technology has announced a new printed circuit board (PCB) design that can boost component heat dissipation by up to 55x.</p>
+                                <div class="col md-2 text-center">
+                                        <a href="https://www.tomshardware.com/pc-components/cooling/a-new-pcb-design-can-boost-heat-dissipation-by-55x-copper-coins-placed-under-heat-generating-components-drop-temps-drastically" class="btn btn-success">View details</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <h4 style="text-align: center"><mark style="background-color: rgba(176, 184, 184, 0.8)">Categories</mark></h4>
+        <section class="py-2">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                    {% for category in categories %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="{% url 'product-per-category' category.id %}">
+                                <img class="card-img-top" src="{{ category.image.url }}" alt="..." />
+                            </a>
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{ category.name }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

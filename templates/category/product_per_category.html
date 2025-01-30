@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} List of products {% endblock %}
+
+{% block content %}
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                {% for product in get_all_products %}
+
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <a href="{% url 'product-details' product.id %}">
+                                <img src="{{ product.image.url }}" class="card-img-top" alt="Image">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title text-left">{{ product.name }}</h5>
+                                <p class="card-text">Price: {{ product.price }} RON</p>
+                                <p class="card-text">Category: {{ product.category }}</p>
+                                <p class="card-text">Brand: {{ product.brand }}</p>
+                                {% if product.cpu_socket != None %}
+                                    <p class="card-text">CPU Socket: {{ product.cpu_socket }}</p>
+                                {% endif %}
+                                {% if product.power_tdp != None %}
+                                    <p class="card-text">Power TDP: {{ product.power_tdp }} W</p>
+                                {% endif %}
+                                {% if product.ram_type != None %}
+                                    <p class="card-text">RAM Type: {{ product.ram_type }}</p>
+                                {% endif %}
+                                {% if product.gpu_type != None %}
+                                    <p class="card-text">GPU Type: {{ product.gpu_type }}</p>
+                                {% endif %}
+
+
+                            </div>
+                            <div class="col md-2 text-center">
+                                <a href="{% url 'product-details' product.id %}" class="btn btn-success">View
+                                    details</a>
+                            </div>
+                            <br>
+
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+{% endblock %}
+
